@@ -38,11 +38,27 @@ Airplane.prototype.land = function () {
     - Give instances of Person a method `.toString()`:
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
-
-function Person() {
-
+let stomach = [];
+function Person(name, age) {
+this.name = name;
+this.age = age;
 }
-
+// let obj = {
+//   name: "me",
+//   eat: function(){
+//    return this.name
+//   }
+// }
+// obj.eat(sometoast);
+Person.prototype.eat = function(someFood){
+stomach.push(someFood);
+}
+Person.prototype.poop = function(){
+  stomach.splice();
+}
+Person.prototype.toString = function(name, age){
+  return `${this.name}, ${this.age}`;
+}
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -57,10 +73,18 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+this.tank = 0;
+this.odometer = 0;
+}
+Car.prototype.fill = function(gallons){
+  this.tank = gallons;
+}
+//stretch:
+
+Car.prototype.drive = function(distance, milesPerGallon, callback){
 
 }
-
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -68,18 +92,31 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
-
+function Baby(babyAttrs) {
+Person.call(this, babyAttrs);
+this.favoriteToy = babyAttrs.favoriteToy;
 }
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+const baby1 = new Baby({
+  name: "Dami",
+  age: 2,
+  favoriteToy: "ball"
+})
+console.log(baby1);
+baby1.eat();
+
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. global/window principla = when this is not specified when the function is called then "this" is binded to the window console. 
+  2. implicite binding = when our object has a method that returns a function (and uses properties from the object) when calling that function were calling it as a property of the object it was defined in and whats to the left of the dot "." for when you call the function thats the object that this is binded to.
+  3. explicit bindeing= is when using the .call .apply and .bind methods they help with binding the this keyword to the object
+  4.new binding = impplies the usage of a constructor function that is names with the first letter capital(i.e. function Person()) and when the function is called you call it using the new keyword and that binds the this with the object that you're using as an argument for that constructor function.   
 */
 
 
